@@ -1,4 +1,4 @@
-### Hi there 👋
+### ZeroCho's Node.js 교과서 👋
 
 <!--
 **1309042/1309042** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
