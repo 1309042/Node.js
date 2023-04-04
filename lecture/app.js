@@ -4,7 +4,8 @@ const morgan = require('morgan');
 const path = require('path')
 const session = require('express-session')
 const nunjucks = require('nunjucks') // 풀스택 개발자를 생각하면 react, vue로 만들어보기
-const dotenv = require('dotenv')
+const { sequelize } = require('./models');
+const dotenv = require('dotenv');
 // process.env.COOKIE_SECRET 없음
 dotenv.config(); // process.env
 // process.env.COOKIE_SECRET 있음
@@ -17,7 +18,14 @@ nunjucks.configure('views', {
     express: app,
     watch: true,
 });
-
+sequelize.sync({ force: false }) // 개발 시에만 쓰기 (잘못 만들었을 경우 대비)
+    .then(() => {
+        console.log('데이터베이스 연결 성공')
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+    
 app.use(morgan('dev')); // 개발모드 // 배포할 땐 combined
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
