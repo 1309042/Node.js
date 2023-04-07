@@ -46,8 +46,9 @@ app.use(session({
     secure: false,
   },
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize()); // req.user, req.login, req.isAuthenticate, req.logout
+app.use(passport.session()); // connect.sid라는 이름으로 세션 쿠키가 브라우저로 전송
+// 브라우저 connect.sid=123454879 -> 이게 서버로 옴
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
@@ -62,7 +63,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
-  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
+  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {}; // 에러 로그를 서비스에게 넘김 / 비워두지 않으면 에러가 다 떠서 해킹 당함
   res.status(err.status || 500);
   res.render('error');
 });
