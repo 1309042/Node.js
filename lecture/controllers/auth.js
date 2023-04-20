@@ -41,6 +41,7 @@ exports.login = (req, res, next) => {
   })(req, res, next); // 미들웨어 확장 패턴
 };
 
+
 exports.logout = (req, res) => { // {} 브라우저 connect.sid가 남아있어도
   req.logout(() => {
     res.redirect('/');
